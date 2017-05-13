@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace MathemathicalLinguisticsTask1
 {
-    public enum State
+    public class State
     {
+        public string Name { get; private set; }
+
+        public State(string name)
+        {
+            Name = name;
+        }
 
     }
 }

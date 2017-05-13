@@ -29,23 +29,24 @@ namespace MathemathicalLinguisticsTask1
         }
 
         private void imageOnePLN_MouseMove(object sender, MouseEventArgs e)
-            => coin_MouseMove(sender, e, 1);
+            => coin_MouseMove(sender, e, 1.00);
      
         private void imageTwoPLN_MouseMove(object sender, MouseEventArgs e)
-            => coin_MouseMove(sender, e, 2);
+            => coin_MouseMove(sender, e, 2.00);
 
         private void imageFivePLN_MouseMove(object sender, MouseEventArgs e)
-            => coin_MouseMove(sender, e, 5);
+            => coin_MouseMove(sender, e, 5.00);
 
-        private void coin_MouseMove(object sender, MouseEventArgs e, int value)
+        private void coin_MouseMove(object sender, MouseEventArgs e, double value)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragDrop.DoDragDrop(sender as Image, value, DragDropEffects.Copy);
         }
 
-        private void textBlockInput_Drop(object sender, DragEventArgs e)
+        private void textBlockInsert_Drop(object sender, DragEventArgs e)
         {
-            var hue = e.Data.GetData(typeof(int));
+            _parkingMeter.InsertCoin((double)e.Data.GetData(typeof(double)));
+            textBoxDisplay.Text = string.Format("{0:N2}", _parkingMeter.InsertedValue);
         }
 
     }
