@@ -20,9 +20,12 @@ namespace MathemathicalLinguisticsTask1
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ParkingMeter _parkingMeter;
+
         public MainWindow()
         {
             InitializeComponent();
+            _parkingMeter = new ParkingMeter();
         }
     }
 }
