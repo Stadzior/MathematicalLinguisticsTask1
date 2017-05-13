@@ -27,5 +27,26 @@ namespace MathemathicalLinguisticsTask1
             InitializeComponent();
             _parkingMeter = new ParkingMeter();
         }
+
+        private void imageOnePLN_MouseMove(object sender, MouseEventArgs e)
+            => coin_MouseMove(sender, e, 1);
+     
+        private void imageTwoPLN_MouseMove(object sender, MouseEventArgs e)
+            => coin_MouseMove(sender, e, 2);
+
+        private void imageFivePLN_MouseMove(object sender, MouseEventArgs e)
+            => coin_MouseMove(sender, e, 5);
+
+        private void coin_MouseMove(object sender, MouseEventArgs e, int value)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragDrop.DoDragDrop(sender as Image, value, DragDropEffects.Copy);
+        }
+
+        private void textBlockInput_Drop(object sender, DragEventArgs e)
+        {
+            var hue = e.Data.GetData(typeof(int));
+        }
+
     }
 }
