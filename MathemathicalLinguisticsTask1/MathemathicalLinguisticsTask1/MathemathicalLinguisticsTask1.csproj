@@ -62,6 +62,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DraggableExtender.cs" />
     <Compile Include="State.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -109,6 +110,12 @@
     <Resource Include="Assets\1pln.png" />
     <Resource Include="Assets\2pln.png" />
     <Resource Include="Assets\5pln.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\parking-meter.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\hands.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

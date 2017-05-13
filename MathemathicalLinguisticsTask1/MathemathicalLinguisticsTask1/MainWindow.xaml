@@ -5,10 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MathemathicalLinguisticsTask1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="385">
-    <Grid>
-        <TextBox HorizontalAlignment="Left" Height="83" Margin="10,10,0,0" TextWrapping="Wrap" Text="0.00" VerticalAlignment="Top" Width="204" FontSize="72" FontFamily="Arial"/>
-        <TextBlock HorizontalAlignment="Left" Margin="312,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="142" Width="13" Background="Black"/>
-
-    </Grid>
+        Title="MainWindow" Height="661.6" Width="385" ResizeMode="CanMinimize">
+    <Window.Background>
+        <ImageBrush ImageSource="Assets/parking-meter.jpg"/>
+    </Window.Background>
+    <Canvas>
+        <Grid x:Name="gridMain">
+        <TextBox x:Name="textBoxDisplay" HorizontalAlignment="Left" Height="41" Margin="147,107,0,0" TextWrapping="Wrap" Text="0.00" VerticalAlignment="Top" Width="95" FontSize="36" FontFamily="Arial" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" BorderBrush="Black" IsEnabled="False"/>
+        <TextBlock x:Name="textBlockInput" AllowDrop="True" HorizontalAlignment="Left" Margin="142,258,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="14" Width="100" Background="Black"/>
+        <Image HorizontalAlignment="Left" Height="428" Margin="25,319,0,-116" VerticalAlignment="Top" Width="300" Source="Assets/hands.png"/>
+        <Image x:Name="imageOnePLN" HorizontalAlignment="Left" Height="55" Margin="99,388,0,0" VerticalAlignment="Top" Width="48" Source="Assets/1pln.png" local:DraggableExtender.CanDrag="True"/>
+        <Image x:Name="imageTwoPLN" HorizontalAlignment="Left" Height="58" Margin="147,420,0,0" VerticalAlignment="Top" Width="56" Source="Assets/2pln.png" />
+        <Image x:Name="imageFivePLN" HorizontalAlignment="Left" Height="55" Margin="208,388,0,0" VerticalAlignment="Top" Width="55" Source="Assets/5pln.png"/>
+            <Label Content="Insert coin here" HorizontalAlignment="Left" Margin="134,277,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="14" Width="118" Foreground="#FF7A1111"/>
+        </Grid>
+        </Canvas>
 </Window>
