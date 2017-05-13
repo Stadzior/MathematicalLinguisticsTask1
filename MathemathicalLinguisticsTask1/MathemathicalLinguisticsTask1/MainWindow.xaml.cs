@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MathemathicalLinguisticsTask1
 {
@@ -20,12 +9,12 @@ namespace MathemathicalLinguisticsTask1
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ParkingMeter _parkingMeter;
+        public ParkingMeter ParkingMeter { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            _parkingMeter = new ParkingMeter();
+            ParkingMeter = Application.Current.Resources["parkingMeter"] as ParkingMeter;
         }
 
         private void imageOnePLN_MouseMove(object sender, MouseEventArgs e)
@@ -45,8 +34,7 @@ namespace MathemathicalLinguisticsTask1
 
         private void textBlockInsert_Drop(object sender, DragEventArgs e)
         {
-            _parkingMeter.InsertCoin((double)e.Data.GetData(typeof(double)));
-            textBoxDisplay.Text = string.Format("{0:N2}", _parkingMeter.InsertedValue);
+            ParkingMeter.InsertCoin((double)e.Data.GetData(typeof(double)));
         }
 
     }

@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MathemathicalLinguisticsTask1
 {
-    public class ParkingMeter
+    public class ParkingMeter : INotifyPropertyChanged
     {
+
+        public event PropertyChangedEventHandler PropertyChanged;
         private State _currentState;
         public State CurrentState
         {
@@ -30,6 +35,17 @@ namespace MathemathicalLinguisticsTask1
 
         public IList<State> States { get; private set; }
         public double InsertedValue { get; private set; }
+
+        private string _displayText;
+        public string DisplayText
+        {
+            get { return _displayText; }
+            set
+            {
+                SetField(ref _displayText, value);
+            }
+        }
+
         public ParkingMeter()
         {
             States = new List<State>()
@@ -84,6 +100,7 @@ namespace MathemathicalLinguisticsTask1
             try
             {
                 CurrentState = States.Single(s => s.Name.Equals(targetStateName));
+                DisplayText = string.Format("{0:N2}", InsertedValue);
             }
             catch (Exception)
             {
@@ -94,13 +111,29 @@ namespace MathemathicalLinguisticsTask1
         private void ReturnCoins()
         {
             //Returns Coins to the user.
+            DisplayText = "Returning coins...";
+            Thread.Sleep(2000);
             InsertedValue = 0;
         }
 
         private void PrintTicket()
         {
             //Print valid parking ticket.
+            DisplayText = "Printing Ticket...";
+            Thread.Sleep(2000);
             InsertedValue = 0;
+        }
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        protected bool SetField<T>(ref T field, T value,[CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 }

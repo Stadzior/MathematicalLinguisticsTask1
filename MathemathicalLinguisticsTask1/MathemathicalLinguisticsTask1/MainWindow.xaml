@@ -8,6 +8,7 @@
     Title="MainWindow"
     Width="385"
     Height="661.6"
+    DataContext="{StaticResource parkingMeter}"
     ResizeMode="CanMinimize"
     mc:Ignorable="d">
     <Window.Background>
@@ -26,7 +27,7 @@
             FontFamily="Arial"
             FontSize="36"
             IsEnabled="False"
-            Text="0.00"
+            Text="{Binding DisplayText}"
             TextWrapping="Wrap" />
         <TextBlock
             x:Name="textBlockInsert"
