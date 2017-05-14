@@ -2,9 +2,11 @@
     x:Class="MathemathicalLinguisticsTask1.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:MathemathicalLinguisticsTask1.Converters"
     xmlns:local="clr-namespace:MathemathicalLinguisticsTask1"
     StartupUri="MainWindow.xaml">
     <Application.Resources>
         <local:ParkingMeter x:Key="parkingMeter" />
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </Application.Resources>
 </Application>

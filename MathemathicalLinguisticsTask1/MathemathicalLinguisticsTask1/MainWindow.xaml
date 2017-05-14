@@ -88,6 +88,33 @@
                 VerticalAlignment="Top"
                 MouseMove="imageFivePLN_MouseMove"
                 Source="Assets/5pln.png" />
+            <TextBox
+                Canvas.Left="290"
+                Canvas.Top="600"
+                Width="79"
+                Height="23"
+                Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}"
+                IsEnabled="True"
+                Text="{Binding CurrentState.Name, Mode=OneWay}"
+                TextWrapping="Wrap" />
+            <Image
+                x:Name="imageRest"
+                Canvas.Left="269"
+                Canvas.Top="256"
+                Width="100"
+                Height="100"
+                MouseLeftButtonDown="imageRest_MouseLeftButtonDown"
+                Source="Assets/rest.png"
+                Visibility="{Binding RestNotTaken, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <Image
+                x:Name="imageTicket"
+                Canvas.Left="10"
+                Canvas.Top="256"
+                Width="100"
+                Height="100"
+                MouseLeftButtonDown="imageTicket_MouseLeftButtonDown"
+                Source="Assets/ticket.png"
+                Visibility="{Binding IsFeePaid, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Canvas>
     </Grid>
 </Window>

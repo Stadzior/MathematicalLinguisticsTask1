@@ -20,21 +20,45 @@ namespace MathemathicalLinguisticsTask1
             set
             {
                 _currentState = value;
-                if(_currentState.Name.Equals("QUnacceptable"))
+                if (_currentState == UnacceptableState)
                 {
                     ReturnCoins();
-                    SwitchState("Q0");
+                    SwitchState(0);
                 }
-                else if (_currentState.Name.Equals("Q7"))
+                else if (_currentState == AcceptState)
                 {
                     PrintTicket();
-                    SwitchState("Q0");
+                    SwitchState(0);
                 }
+
+                DisplayText = _currentState.DisplayText;
             }
         }
 
         public IList<State> States { get; private set; }
-        public double InsertedValue { get; private set; }
+        public State BeginState { get; private set; }
+        public State UnacceptableState { get; private set; }
+        public State AcceptState { get; set; }
+
+        private bool _restNotTaken;
+        public bool RestNotTaken
+        {
+            get { return _restNotTaken; }
+            set
+            {
+                SetField(ref _restNotTaken, value);
+            }
+        }
+
+        private bool _isFeePaid;
+        public bool IsFeePaid
+        {
+            get { return _isFeePaid; }
+            set
+            {
+                SetField(ref _isFeePaid, value);
+            }
+        }
 
         private string _displayText;
         public string DisplayText
@@ -50,78 +74,101 @@ namespace MathemathicalLinguisticsTask1
         {
             States = new List<State>()
             {
-                new State("Q0"),
-                new State("Q1"),
-                new State("Q2"),
-                new State("Q3"),
-                new State("Q4"),
-                new State("Q5"),
-                new State("Q6"),
-                new State("Q7"),
-                new State("QUnacceptable"),
+                new State("Q0","0.00"),
+                new State("Q1","1.00"),
+                new State("Q2","2.00"),
+                new State("Q3","3.00"),
+                new State("Q4","4.00"),
+                new State("Q5","5.00"),
+                new State("Q6","6.00"),
+                new State("Q7","7.00"),
+                new State("QUnacceptable","Error"),
             };
 
-            SwitchState("Q0");
-        }
-        public void InsertCoin(double value)
-        {
-            InsertedValue += value;
-            switch (InsertedValue)
-            {
-                case 1:
-                    SwitchState("Q1");
-                    break;
-                case 2:
-                    SwitchState("Q2");
-                    break;
-                case 3:
-                    SwitchState("Q3");
-                    break;
-                case 4:
-                    SwitchState("Q4");
-                    break;
-                case 5:
-                    SwitchState("Q5");
-                    break;
-                case 6:
-                    SwitchState("Q6");
-                    break;
-                case 7:
-                    SwitchState("Q7");
-                    break;
-                default:
-                    SwitchState("QUnacceptable");
-                    break;
-            }
+            InitializeStateTransferLogic();
+
+            BeginState = States.Single(s => s.Name.Equals("Q0"));
+            UnacceptableState = States.Single(s => s.Name.Equals("QUnacceptable"));
+            AcceptState = States.Single(s => s.Name.Equals("Q7"));
+            CurrentState = BeginState;
         }
 
-        private void SwitchState(string targetStateName)
+        private void InitializeStateTransferLogic()
+        {
+            States.Single(s => s.Name.Equals("Q0")).FollowingStates = new Dictionary<double, State>()
+            {
+                {1, States.Single(s => s.Name.Equals("Q1"))},
+                {2, States.Single(s => s.Name.Equals("Q2"))},
+                {5, States.Single(s => s.Name.Equals("Q5"))}
+            };
+            States.Single(s => s.Name.Equals("Q1")).FollowingStates = new Dictionary<double, State>()
+            {
+                {1, States.Single(s => s.Name.Equals("Q2"))},
+                {2, States.Single(s => s.Name.Equals("Q3"))},
+                {5, States.Single(s => s.Name.Equals("Q6"))}
+            };
+            States.Single(s => s.Name.Equals("Q2")).FollowingStates = new Dictionary<double, State>()
+            {
+                {1, States.Single(s => s.Name.Equals("Q3"))},
+                {2, States.Single(s => s.Name.Equals("Q4"))},
+                {5, States.Single(s => s.Name.Equals("Q7"))}
+            };
+            States.Single(s => s.Name.Equals("Q3")).FollowingStates = new Dictionary<double, State>()
+            {
+                {1, States.Single(s => s.Name.Equals("Q4"))},
+                {2, States.Single(s => s.Name.Equals("Q5"))}
+            };
+            States.Single(s => s.Name.Equals("Q4")).FollowingStates = new Dictionary<double, State>()
+            {
+                {1, States.Single(s => s.Name.Equals("Q5"))},
+                {2, States.Single(s => s.Name.Equals("Q6"))}
+            };
+            States.Single(s => s.Name.Equals("Q5")).FollowingStates = new Dictionary<double, State>()
+            {
+                {1, States.Single(s => s.Name.Equals("Q6"))},
+                {2, States.Single(s => s.Name.Equals("Q7"))}
+            };
+            States.Single(s => s.Name.Equals("Q6")).FollowingStates = new Dictionary<double, State>()
+            {
+                {1, States.Single(s => s.Name.Equals("Q7"))}
+            };
+            States.Single(s => s.Name.Equals("Q7")).FollowingStates = new Dictionary<double, State>()
+            {
+                {0, States.Single(s => s.Name.Equals("Q0"))}
+            };
+            States.Single(s => s.Name.Equals("QUnacceptable")).FollowingStates = new Dictionary<double, State>()
+            {
+                {0, States.Single(s => s.Name.Equals("Q0"))},
+            };
+        }
+
+        public void InsertCoin(double value)
+        {
+            SwitchState(value);
+        }
+
+        private void SwitchState(double value)
         {
             try
             {
-                CurrentState = States.Single(s => s.Name.Equals(targetStateName));
-                DisplayText = string.Format("{0:N2}", InsertedValue);
+                CurrentState = CurrentState.GetNextState(value);
             }
-            catch (Exception)
+            catch (KeyNotFoundException)
             {
-                CurrentState = States.Single(s => s.Name.Equals("QUnacceptable"));
+                CurrentState = UnacceptableState;
             }
         }
 
         private void ReturnCoins()
         {
             //Returns Coins to the user.
-            DisplayText = "Returning coins...";
-            Thread.Sleep(2000);
-            InsertedValue = 0;
+            RestNotTaken = true;
         }
 
         private void PrintTicket()
         {
             //Print valid parking ticket.
-            DisplayText = "Printing Ticket...";
-            Thread.Sleep(2000);
-            InsertedValue = 0;
+            IsFeePaid = true;
         }
 
         protected virtual void OnPropertyChanged(string propertyName)

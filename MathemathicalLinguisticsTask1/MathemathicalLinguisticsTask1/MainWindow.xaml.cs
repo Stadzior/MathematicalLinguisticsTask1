@@ -37,5 +37,14 @@ namespace MathemathicalLinguisticsTask1
             ParkingMeter.InsertCoin((double)e.Data.GetData(typeof(double)));
         }
 
+        private void imageRest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ParkingMeter.RestNotTaken = false;
+        }
+
+        private void imageTicket_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ParkingMeter.IsFeePaid = false;
+        }
     }
 }
