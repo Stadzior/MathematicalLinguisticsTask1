@@ -32,6 +32,7 @@ namespace MathemathicalLinguisticsTask1
                 }
 
                 DisplayText = _currentState.DisplayText;
+                CurrentStateName = _currentState.Name;
             }
         }
 
@@ -67,6 +68,16 @@ namespace MathemathicalLinguisticsTask1
             set
             {
                 SetField(ref _displayText, value);
+            }
+        }
+
+        private string _currentStateName;
+        public string CurrentStateName
+        {
+            get { return _currentStateName; }
+            set
+            {
+                SetField(ref _currentStateName, value);
             }
         }
 

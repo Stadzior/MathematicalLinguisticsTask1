@@ -95,7 +95,7 @@
                 Height="23"
                 Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}"
                 IsEnabled="True"
-                Text="{Binding CurrentState.Name, Mode=OneWay}"
+                Text="{Binding CurrentStateName}"
                 TextWrapping="Wrap" />
             <Image
                 x:Name="imageRest"
