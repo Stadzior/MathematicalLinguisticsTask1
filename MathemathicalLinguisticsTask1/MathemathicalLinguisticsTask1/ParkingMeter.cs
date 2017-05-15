@@ -21,15 +21,9 @@ namespace MathemathicalLinguisticsTask1
             {
                 _currentState = value;
                 if (_currentState == UnacceptableState)
-                {
                     ReturnCoins();
-                    SwitchState(0);
-                }
                 else if (_currentState == AcceptState)
-                {
                     PrintTicket();
-                    SwitchState(0);
-                }
 
                 DisplayText = _currentState.DisplayText;
                 CurrentStateName = _currentState.Name;
@@ -93,13 +87,13 @@ namespace MathemathicalLinguisticsTask1
                 new State("Q5","5.00"),
                 new State("Q6","6.00"),
                 new State("Q7","7.00"),
-                new State("QUnacceptable","Error"),
+                new State("Q8","Error"),
             };
 
             InitializeStateTransferLogic();
 
             BeginState = States.Single(s => s.Name.Equals("Q0"));
-            UnacceptableState = States.Single(s => s.Name.Equals("QUnacceptable"));
+            UnacceptableState = States.Single(s => s.Name.Equals("Q8"));
             AcceptState = States.Single(s => s.Name.Equals("Q7"));
             CurrentState = BeginState;
         }
@@ -143,14 +137,8 @@ namespace MathemathicalLinguisticsTask1
             {
                 {1, States.Single(s => s.Name.Equals("Q7"))}
             };
-            States.Single(s => s.Name.Equals("Q7")).FollowingStates = new Dictionary<double, State>()
-            {
-                {0, States.Single(s => s.Name.Equals("Q0"))}
-            };
-            States.Single(s => s.Name.Equals("QUnacceptable")).FollowingStates = new Dictionary<double, State>()
-            {
-                {0, States.Single(s => s.Name.Equals("Q0"))},
-            };
+            States.Single(s => s.Name.Equals("Q7")).FollowingStates = new Dictionary<double, State>();
+            States.Single(s => s.Name.Equals("Q8")).FollowingStates = new Dictionary<double, State>();
         }
 
         public void InsertCoin(double value)
